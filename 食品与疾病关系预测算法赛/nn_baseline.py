@@ -103,10 +103,10 @@ class NN_Baseline(nn.Module):
     
     def forward(self, x1,x2,x3,x4,x5):
         out1 = torch.mean(self.emb(x1),dim=1)
-        out2 = F.relu(self.fc_Nx(x2))
-        out3 = F.relu(self.fc_F1(x3))
-        out4 = F.relu(self.fc_F2(x4))
-        out5 = F.relu(self.fc_F3(x5))
+        out2 = self.fc_Nx(x2)
+        out3 = self.fc_F1(x3)
+        out4 = self.fc_F2(x4)
+        out5 = self.fc_F3(x5)
         
         # 随便处理一下，没有技巧，全靠感觉
         out_34 = out3 * out4
