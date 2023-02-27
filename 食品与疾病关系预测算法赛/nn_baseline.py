@@ -149,7 +149,7 @@ def evaluate_accuracy(x1,x2,x3,x4,x5, y,net,criterion):
     out = out.squeeze(dim=-1)
     correct= (out.ge(0.5) == y).sum().item()
     n = y.shape[0]
-    model.train()
+
     return correct / n, loss
 
 # 五折一下
