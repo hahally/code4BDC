@@ -331,6 +331,7 @@ class Ensemble(BartForConditionalGeneration, GenerationMixin):
                 if this_peer_finished_flag.item() == 0.0:
                     break
             outputs = []
+            next_token_logits = 0
             for idx, model in enumerate(self.model_list):
                 model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs_list[idx])
                 out = model(
@@ -339,7 +340,7 @@ class Ensemble(BartForConditionalGeneration, GenerationMixin):
                     output_attentions=output_attentions,
                     output_hidden_states=output_hidden_states,
                 )
-                next_token_logits = out.logits[:, -1, :]/len(self.model_list)
+                next_token_logits += out.logits[:, -1, :]/len(self.model_list)
                 outputs.append(out)
 
             if synced_gpus and this_peer_finished:
